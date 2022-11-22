@@ -11,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final _sessionDataProvider = SessionDataProvider();
   AuthBloc() : super(CheckingAuthStatus()) {
     on<AuthCheckStatusEvent>((event, emit) async {
+      emit(CheckingAuthStatus());
       final isAuthenticated = await _sessionDataProvider.isAuthenticated;
       emit(isAuthenticated ? Authenticated() : NotAuthenticated());
     });
