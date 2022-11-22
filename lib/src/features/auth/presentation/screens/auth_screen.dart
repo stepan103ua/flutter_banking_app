@@ -24,7 +24,7 @@ class AuthScreen extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    LoginTabView(),
+                    const LoginTabView(),
                     RegisterTabView(),
                   ],
                 ),
