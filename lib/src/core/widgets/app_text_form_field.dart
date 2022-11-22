@@ -40,6 +40,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         )
       : null;
 
+  void saveData(String? value) {
+    if (widget.dataKey != null && widget.data != null) {
+      widget.data![widget.dataKey!] = value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -48,12 +54,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         suffixIcon: suffix,
         contentPadding: const EdgeInsets.all(20),
       ),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       scrollPadding: EdgeInsets.zero,
       obscureText: widget.isPassword && isObscured,
       validator: widget.validator,
-      onSaved: widget.dataKey != null && widget.data != null
-          ? (newValue) => widget.data![widget.dataKey!] = newValue
-          : null,
+      onChanged: saveData,
+      onSaved: saveData,
     );
   }
 }
