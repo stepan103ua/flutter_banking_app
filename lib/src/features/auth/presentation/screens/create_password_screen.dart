@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banking/src/core/constants/validation.dart';
 import 'package:flutter_banking/src/core/widgets/app_text_form_field.dart';
 import 'package:flutter_banking/src/features/auth/models/register_model.dart';
+import 'package:flutter_banking/src/features/auth/presentation/bloc/auth_screen_cubit/auth_screen_cubit.dart';
+import 'package:flutter_banking/src/features/auth/presentation/widgets/auth_button.dart';
 import 'package:flutter_banking/src/features/auth/presentation/widgets/auth_header.dart';
 import 'package:flutter_banking/src/features/auth/services/auth_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
@@ -14,7 +18,7 @@ class CreatePasswordScreen extends StatefulWidget {
 
 class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
   final formKey = GlobalKey<FormState>();
-  void createAccount(Map<String, dynamic>? formData) async {
+  void _createAccount(Map<String, dynamic>? formData) async {
     if (formData == null) {
       return;
     }
@@ -25,10 +29,17 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
       return;
     }
 
+    if (!formState.validate()) {
+      return;
+    }
+
     formState.save();
+    final loading = BlocProvider.of<AuthScreenCubit>(context).loading;
+    loading(true);
 
     final registerModel = RegisterModel.fromJson(formData);
     final errorMessage = await AuthService().register(registerModel);
+    loading(false);
 
     if (errorMessage != null) {
       Fluttertoast.showToast(msg: errorMessage);
@@ -39,6 +50,9 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
 
     Navigator.of(context).pushReplacementNamed('/');
   }
+
+  String? _handleConfirmPasswordValidation(String? value, String? password) =>
+      AppValidation.confirmPasswordValidation(value, password);
 
   @override
   Widget build(BuildContext context) {
@@ -72,16 +86,21 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                 dataKey: 'password',
                 labelText: 'Password',
                 isPassword: true,
+                validator: AppValidation.passwordValidation,
               ),
               const SizedBox(height: 20),
-              const AppTextFormField(
+              AppTextFormField(
                 labelText: 'Confirm password',
                 isPassword: true,
+                validator: (value) => _handleConfirmPasswordValidation(
+                  value,
+                  formData?['password'],
+                ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => createAccount(formData),
-                child: const Text('Create account'),
+              AuthButton(
+                title: 'Create account',
+                onPress: () => _createAccount(formData),
               )
             ],
           ),

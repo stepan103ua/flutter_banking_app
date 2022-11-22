@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_banking/src/features/auth/presentation/bloc/cubit/login_mode_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/login_mode_cubit/login_mode_cubit.dart';
 
 class LoginModeSelectorItem extends StatelessWidget {
   const LoginModeSelectorItem(

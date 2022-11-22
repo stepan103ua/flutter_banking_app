@@ -70,7 +70,6 @@ class AuthApiProvider {
       );
 
       final responseBody = json.decode(response.body);
-
       if (responseBody['error'] != null) {
         throw AuthResponseErrorException(responseBody['error']);
       }
