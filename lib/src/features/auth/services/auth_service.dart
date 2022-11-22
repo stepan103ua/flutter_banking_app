@@ -13,7 +13,7 @@ class AuthService {
       final responseData = await _authApiProvider.loginWithPhoneNumber(
           phoneNumber: loginModel.login, password: loginModel.password);
 
-      _saveToSession(responseData);
+      await _saveToSession(responseData);
     } on AuthResponseErrorException catch (error) {
       return error.message;
     }
@@ -25,7 +25,7 @@ class AuthService {
       final responseData = await _authApiProvider.loginWithIpn(
           ipn: loginModel.login, password: loginModel.password);
 
-      _saveToSession(responseData);
+      await _saveToSession(responseData);
 
       return null;
     } on AuthResponseErrorException catch (error) {
