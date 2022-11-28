@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banking/src/features/auth/presentation/screens/pincode_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/blocs/auth_bloc/auth_bloc.dart';
@@ -12,7 +13,6 @@ class HomeProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(AuthCheckStatusEvent());
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is CheckingAuthStatus) {
@@ -23,6 +23,9 @@ class HomeProvider extends StatelessWidget {
         }
         if (state is NotAuthenticated) {
           return const AuthScreen();
+        }
+        if (state is AuthSubmitExpecting) {
+          return const PincodeScreen();
         }
         return const ErrorScreen();
       },
