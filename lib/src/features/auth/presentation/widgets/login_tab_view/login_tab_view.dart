@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banking/src/core/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter_banking/src/core/constants/validation.dart';
 import 'package:flutter_banking/src/core/widgets/app_text_form_field.dart';
 import 'package:flutter_banking/src/features/auth/presentation/bloc/auth_screen_cubit/auth_screen_cubit.dart';
@@ -38,12 +39,14 @@ class _LoginTabViewState extends State<LoginTabView> {
     final authScreenLoading = BlocProvider.of<AuthScreenCubit>(context).loading;
 
     authScreenLoading(true);
+
     final loginModel = LoginModel.fromJson(formData);
 
     final authService = AuthService();
     final errorMessage = state is LoginPhoneMode
         ? await authService.loginWithPhone(loginModel)
         : await authService.loginWithIpn(loginModel);
+
     authScreenLoading(false);
 
     if (errorMessage != null) {
@@ -52,6 +55,8 @@ class _LoginTabViewState extends State<LoginTabView> {
     }
 
     if (!mounted) return;
+
+    BlocProvider.of<AuthBloc>(context).add(AuthLoginEvent());
 
     Navigator.of(context).pushReplacementNamed('/');
   }
