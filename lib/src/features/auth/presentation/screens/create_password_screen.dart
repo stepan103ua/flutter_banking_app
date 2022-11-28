@@ -9,6 +9,8 @@ import 'package:flutter_banking/src/features/auth/services/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../../core/blocs/auth_bloc/auth_bloc.dart';
+
 class CreatePasswordScreen extends StatefulWidget {
   const CreatePasswordScreen({super.key});
 
@@ -47,6 +49,8 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
     }
 
     if (!mounted) return;
+
+    BlocProvider.of<AuthBloc>(context).add(AuthLoginEvent());
 
     Navigator.of(context).pushReplacementNamed('/');
   }
