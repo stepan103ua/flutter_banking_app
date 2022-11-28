@@ -86,4 +86,13 @@ class AuthApiProvider {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
+    try {
+      return await _auth(
+          {'refreshToken': refreshToken}, EndpointsKeys.refreshTokenEndpoint);
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
