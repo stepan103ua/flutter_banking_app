@@ -1,6 +1,6 @@
-class AuthResponseErrorException implements Exception {
+class AuthErrorException implements Exception {
   final String message;
-  AuthResponseErrorException(this.message);
+  AuthErrorException(this.message);
 
   @override
   String toString() {
