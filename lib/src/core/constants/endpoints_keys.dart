@@ -6,4 +6,10 @@ class EndpointsKeys {
   static const registerEndpoint = "/register";
 
   static const refreshTokenEndpoint = "/refresh_token";
+
+  static const allCards = '/user/cards';
+
+  static const newCard = '/user/cards/new';
+
+  static String getCard(String cardNumber) => '$allCards/$cardNumber';
 }
