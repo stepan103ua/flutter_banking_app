@@ -1,4 +1,5 @@
 import 'package:flutter_banking/src/core/abstract_classes/translator.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/unknown_enum_value_exception.dart';
 
 enum CardTypes { debit, credit, unknown }
 
@@ -16,6 +17,24 @@ class CardTypesTranslator extends Translator<CardTypes> {
         return CardTypes.credit;
       default:
         return CardTypes.unknown;
+    }
+  }
+}
+
+class CardTypesStringTranslator extends Translator<String> {
+  final CardTypes _cardType;
+
+  CardTypesStringTranslator(this._cardType);
+
+  @override
+  String get value {
+    switch (_cardType) {
+      case CardTypes.debit:
+        return 'Debit';
+      case CardTypes.credit:
+        return 'Credit';
+      case CardTypes.unknown:
+        throw UnknownEnumValueException('Unknown card type');
     }
   }
 }
