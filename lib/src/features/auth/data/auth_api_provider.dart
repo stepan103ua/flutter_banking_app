@@ -71,7 +71,7 @@ class AuthApiProvider {
 
       final responseBody = json.decode(response.body);
       if (responseBody['error'] != null) {
-        throw AuthResponseErrorException(responseBody['error']);
+        throw AuthErrorException(responseBody['error']);
       }
 
       if (responseBody['refresh_token'] != null &&
@@ -81,7 +81,7 @@ class AuthApiProvider {
         return responseBody;
       }
 
-      throw AuthResponseErrorException('Failed to login. Try again');
+      throw AuthErrorException('Failed to login. Try again');
     } catch (_) {
       rethrow;
     }

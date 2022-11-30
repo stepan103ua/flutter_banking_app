@@ -1,6 +1,7 @@
-class AuthErrorException implements Exception {
+class CardApiException implements Exception {
   final String message;
-  AuthErrorException(this.message);
+
+  CardApiException(this.message);
 
   @override
   String toString() {

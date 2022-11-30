@@ -15,7 +15,7 @@ class AuthService {
           phoneNumber: loginModel.login, password: loginModel.password);
 
       await _saveToSession(responseData);
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     }
     return null;
@@ -29,7 +29,7 @@ class AuthService {
       await _saveToSession(responseData);
 
       return null;
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     }
   }
@@ -41,7 +41,7 @@ class AuthService {
       _saveToSession(responseData);
 
       return null;
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     }
   }
@@ -57,7 +57,7 @@ class AuthService {
       await _saveToSession(responseData);
 
       return null;
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     } on NoInternetConnectionException catch (error) {
       return error.message;
