@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_banking/src/core/constants/endpoints_keys.dart';
 import 'package:flutter_banking/src/core/data/session_data_provider.dart';
-import 'package:flutter_banking/src/core/exceptions/auth_response_error_exception.dart';
-import 'package:flutter_banking/src/core/exceptions/card_api_exception.dart';
-import 'package:flutter_banking/src/core/exceptions/no_internet_connection_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/auth_response_error_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/card_api_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/no_internet_connection_exception.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter_banking/src/core/data/session_data_provider.dart';
-import 'package:flutter_banking/src/core/exceptions/auth_response_error_exception.dart';
-import 'package:flutter_banking/src/core/exceptions/no_internet_connection_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/auth_response_error_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/no_internet_connection_exception.dart';
 import 'package:flutter_banking/src/features/auth/data/auth_api_provider.dart';
 import 'package:flutter_banking/src/features/auth/models/login_model.dart';
 import 'package:flutter_banking/src/features/auth/models/register_model.dart';
