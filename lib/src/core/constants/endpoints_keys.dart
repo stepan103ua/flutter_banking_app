@@ -1,5 +1,5 @@
 class EndpointsKeys {
-  static const baseUrl = "http://192.168.0.102:7070";
+  static const baseUrl = "http://10.0.2.2:7070";
 
   static const loginEndpoint = "/login";
 
