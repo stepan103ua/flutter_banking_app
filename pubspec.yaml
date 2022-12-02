@@ -40,6 +40,8 @@ dependencies:
   flutter_bloc: ^8.1.1
   bloc: ^8.1.0
   fluttertoast: ^8.1.1
+  carousel_slider: ^4.1.1
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -90,6 +92,9 @@ flutter:
         - asset: assets/fonts/roboto/Roboto-Regular.ttf
         - asset: assets/fonts/roboto/Roboto-Italic.ttf
           style: italic
+    - family: CardProviderIcons
+      fonts:
+        - asset: assets/fonts/card_provider_icons/CardProviderIcons.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
