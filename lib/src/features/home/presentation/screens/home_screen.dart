@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_banking/src/features/home/presentation/widgets/card_carousel/card_carousel.dart';
 import 'package:flutter_banking/src/features/home/presentation/widgets/frequently_used_functions/frequently_used_functions.dart';
@@ -15,7 +17,8 @@ class HomeScreen extends StatelessWidget {
     final horizontalPadding = width * 0.09;
     final appBarHorizontalPadding = horizontalPadding - 12;
     final heightWithoutCardCarousel = screenHeight - _getCarouselHeight(width);
-    final frequentlyUsedFunctionsHeight = heightWithoutCardCarousel * 0.3;
+    final frequentlyUsedFunctionsHeight =
+        max(heightWithoutCardCarousel * 0.3, 150).toDouble();
     final spacingHeight = heightWithoutCardCarousel * 0.05;
 
     return Scaffold(

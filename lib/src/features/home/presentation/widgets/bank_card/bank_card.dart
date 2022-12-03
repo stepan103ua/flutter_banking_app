@@ -25,6 +25,16 @@ class BankCard extends StatelessWidget {
   String cardTypeText(CardTypes cardType) =>
       '${CardTypesStringTranslator(cardType).value} card';
 
+  Widget _buildFittedWidget(double height, Widget child) {
+    return SizedBox(
+      height: height,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: child,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bankCardCubit = BankCardCubit();
@@ -38,32 +48,53 @@ class BankCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [cardBlackBackground, cardGreyBackground],
+              colors: [
+                cardBlackBackground,
+                cardGreyBackground,
+              ],
               begin: Alignment.bottomLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Flutter Bank',
-                  style:
-                      bankCardTextStyle.copyWith(fontWeight: FontWeight.bold)),
-              const Spacer(),
-              BankCardNumber(cardNumber: cardNumber),
-              Text(
-                cardTypeText(cardType),
-                style: bankCardTextStyle.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+          child: LayoutBuilder(
+            builder: (context, constraints) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildFittedWidget(
+                  constraints.maxHeight * 0.2,
+                  Text(
+                    'Flutter Bank',
+                    style: bankCardTextStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              const Spacer(),
-              BankCardFooter(
-                  expirationDate: expirationDate, cardProvider: cardProvider),
-            ],
+                const Spacer(),
+                _buildFittedWidget(
+                  constraints.maxHeight * 0.3,
+                  BankCardNumber(cardNumber: cardNumber),
+                ),
+                _buildFittedWidget(
+                  constraints.maxHeight * 0.15,
+                  Text(
+                    cardTypeText(cardType),
+                    style: bankCardTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                BankCardFooter(
+                  expirationDate: expirationDate,
+                  cardProvider: cardProvider,
+                  height: constraints.maxHeight * 0.3,
+                ),
+              ],
+            ),
           ),
         ),
       ),
