@@ -27,8 +27,7 @@ class CardCarousel extends StatelessWidget {
       itemCount: cards.length,
       itemBuilder: (context, index, realIndex) => cards[index],
       options: CarouselOptions(
-        aspectRatio: 0.6,
-        viewportFraction: 0.83,
+        viewportFraction: 0.82,
         enlargeCenterPage: true,
         enableInfiniteScroll: false,
         height: height,

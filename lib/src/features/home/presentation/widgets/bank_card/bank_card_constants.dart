@@ -12,6 +12,6 @@ TextStyle get bankCardTextStyle => const TextStyle(
     );
 
 Map<CardProviders, IconData> get providerIcons => {
-      CardProviders.mastercard: CardProviderIcons.cc_mastercard,
+      CardProviders.mastercard: CardProviderIcons.mastercard,
       CardProviders.visa: CardProviderIcons.visa,
     };
