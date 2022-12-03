@@ -53,7 +53,13 @@ class BankCard extends StatelessWidget {
                       bankCardTextStyle.copyWith(fontWeight: FontWeight.bold)),
               const Spacer(),
               BankCardNumber(cardNumber: cardNumber),
-              Text(cardTypeText(cardType), style: bankCardTextStyle),
+              Text(
+                cardTypeText(cardType),
+                style: bankCardTextStyle.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const Spacer(),
               BankCardFooter(
                   expirationDate: expirationDate, cardProvider: cardProvider),
