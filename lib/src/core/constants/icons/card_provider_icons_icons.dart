@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CardProviderIcons.ttf
 ///
-/// 
+///
 /// * Font Awesome 4, Copyright (C) 2016 by Dave Gandy
 ///         Author:    Dave Gandy
 ///         License:   SIL ()
@@ -25,6 +25,8 @@ class CardProviderIcons {
   static const _kFontFam = 'CardProviderIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData visa = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData cc_mastercard = IconData(0xf1f1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData visa =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData mastercard =
+      IconData(0xf1f1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
