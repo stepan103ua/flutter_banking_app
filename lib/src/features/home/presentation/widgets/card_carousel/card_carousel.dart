@@ -1,37 +1,47 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_banking/src/core/enums/card_providers.dart';
-import 'package:flutter_banking/src/core/enums/card_types.dart';
+import 'package:flutter_banking/src/features/home/presentation/bloc/home_screen_bloc/home_screen_bloc.dart';
 import 'package:flutter_banking/src/features/home/presentation/widgets/bank_card/bank_card.dart';
+import 'package:flutter_banking/src/features/home/presentation/widgets/bank_card/widgets/bank_card_placeholder.dart';
+import 'package:flutter_banking/src/features/home/presentation/widgets/card_carousel/add_bank_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardCarousel extends StatelessWidget {
-  CardCarousel({super.key, required this.height});
+  const CardCarousel({super.key, required this.height});
   final double height;
-  final cards = [
-    BankCard(
-      cardNumber: '1234567890123456',
-      expirationDate: DateTime.now(),
-      cardProvider: CardProviders.visa,
-      cardType: CardTypes.credit,
-    ),
-    BankCard(
-      cardNumber: '1234567890123456',
-      expirationDate: DateTime.now(),
-      cardProvider: CardProviders.mastercard,
-      cardType: CardTypes.debit,
-    ),
-  ];
+
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: cards.length,
-      itemBuilder: (context, index, realIndex) => cards[index],
-      options: CarouselOptions(
-        viewportFraction: 0.82,
-        enlargeCenterPage: true,
-        enableInfiniteScroll: false,
-        height: height,
-      ),
+    return BlocBuilder<HomeScreenBloc, HomeScreenState>(
+      builder: (context, state) {
+        if (state is HomeScreenLoaded) {
+          if (state.cards.isEmpty) {
+            return AddBankCard(height: height);
+          }
+          return CarouselSlider.builder(
+            itemCount: state.cards.length,
+            itemBuilder: (context, index, realIndex) {
+              final cardModel = state.cards[index];
+              return BankCard(
+                cardNumber: cardModel.cardNumber,
+                expirationDate: cardModel.expirationTime,
+                cardProvider: cardModel.cardProvider,
+                cardType: cardModel.cardType,
+              );
+            },
+            options: CarouselOptions(
+              viewportFraction: 0.82,
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              height: height,
+            ),
+          );
+        }
+        return BankCardPlaceholder(
+          height: height,
+          width: height / 0.6,
+        );
+      },
     );
   }
 }
