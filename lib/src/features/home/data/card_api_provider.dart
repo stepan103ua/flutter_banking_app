@@ -26,7 +26,7 @@ class CardApiProvider {
         throw NoInternetConnectionException('No internet connection');
       }
       final response = await http.get(
-        Uri.parse(EndpointsKeys.allCards),
+        Uri.parse(EndpointsKeys.baseUrl + EndpointsKeys.allCards),
         headers: await _header,
       );
       final responseBody = json.decode(response.body);
@@ -45,7 +45,7 @@ class CardApiProvider {
         throw NoInternetConnectionException('No internet connection');
       }
       final response = await http.get(
-        Uri.parse(EndpointsKeys.getCard(cardNumber)),
+        Uri.parse(EndpointsKeys.baseUrl + EndpointsKeys.getCard(cardNumber)),
         headers: await _header,
       );
       final responseBody = json.decode(response.body);
@@ -64,7 +64,7 @@ class CardApiProvider {
         throw NoInternetConnectionException('No internet connection');
       }
       final response = await http.post(
-        Uri.parse(EndpointsKeys.newCard),
+        Uri.parse(EndpointsKeys.baseUrl + EndpointsKeys.newCard),
         headers: await _header,
         body: body,
       );
