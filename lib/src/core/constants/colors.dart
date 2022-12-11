@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ConstantColors {
   static Color get blue => const Color.fromRGBO(96, 142, 233, 1);
   static MaterialColor get blueMaterialColor => _createMaterialColor(blue);
+  static Color get greyPlaceholder => Colors.grey.shade400;
 
   static MaterialColor _createMaterialColor(Color color) {
     List strengths = <double>[.05];
