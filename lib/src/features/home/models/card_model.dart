@@ -31,8 +31,8 @@ class CardModel {
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
         cardNumber: json['cardNumber'],
-        creationTime: json['creationTime'],
-        expirationTime: json['expirationTime'],
+        creationTime: DateTime.parse(json['creationTime']),
+        expirationTime: DateTime.parse(json['expirationTime']),
         cvvCode: json['cvvCode'],
         pinCode: json['pinCode'],
         cardType: CardTypesTranslator(json['cardType']['name']).value,
@@ -40,8 +40,8 @@ class CardModel {
         cardProvider:
             CardProviderTranslator(json['providerEntity']['providerName'])
                 .value,
-        money: json['sum'],
-        moneyLimit: json['sumLimit'],
+        money: json['sum'].toDouble(),
+        moneyLimit: json['sumLimit'].toDouble(),
         isBlocked: json['isBlocked'],
       );
 }
