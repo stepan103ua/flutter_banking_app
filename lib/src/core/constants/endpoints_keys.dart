@@ -7,7 +7,7 @@ class EndpointsKeys {
 
   static const refreshTokenEndpoint = "/refresh_token";
 
-  static const allCards = '/user/cards';
+  static const allCards = '/user/cards/';
 
   static const newCard = '/user/cards/new';
 
