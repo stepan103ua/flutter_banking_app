@@ -12,8 +12,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(CheckingAuthStatus()) {
     on<AuthCheckStatusEvent>((event, emit) async {
       emit(CheckingAuthStatus());
-      final isAuthenticated = await _sessionDataProvider.isAuthenticated;
-      emit(isAuthenticated ? Authenticated() : NotAuthenticated());
+
+      emit(await _sessionDataProvider.authState);
     });
     on<AuthLogoutEvent>((event, emit) async {
       await _sessionDataProvider.logout();
@@ -23,6 +23,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final authService = AuthService();
 
       await authService.register(event.registerModel);
+    });
+    on<AuthLoginEvent>((event, emit) async {
+      emit(Authenticated());
     });
   }
 }

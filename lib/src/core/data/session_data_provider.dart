@@ -1,3 +1,4 @@
+import 'package:flutter_banking/src/core/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SessionDataProvider {
@@ -40,9 +41,14 @@ class SessionDataProvider {
     return DateTime.tryParse(expireDate);
   }
 
-  Future<void> logout() async => await _secureStorage.deleteAll();
+  Future<void> logout() async {
+    await _secureStorage.delete(key: 'access_expire_date');
+    await _secureStorage.delete(key: 'refresh_expire_date');
+    await _secureStorage.delete(key: 'access_token');
+    await _secureStorage.delete(key: 'refresh_token');
+  }
 
-  Future<bool> get isAuthenticated async {
+  Future<AuthState> get authState async {
     final accessExpireDateData =
         await _secureStorage.read(key: 'access_expire_date');
     final refreshExpireDateData =
@@ -53,16 +59,28 @@ class SessionDataProvider {
         refreshExpireDateData != null &&
         accessExpireDateData != null;
 
-    if (!hasTokens) return false;
+    if (!hasTokens) return NotAuthenticated();
 
     final accessExpireDate = DateTime.tryParse(accessExpireDateData);
     final refreshExpireDate = DateTime.tryParse(refreshExpireDateData);
 
-    if (accessExpireDate == null || refreshExpireDate == null) {
-      return false;
+    if (accessExpireDate == null ||
+        refreshExpireDate == null ||
+        (accessExpireDate.isBefore(DateTime.now()) &&
+            refreshExpireDate.isBefore(
+              DateTime.now(),
+            ))) {
+      return NotAuthenticated();
     }
 
-    return accessExpireDate.isAfter(DateTime.now()) &&
-        refreshExpireDate.isAfter(DateTime.now());
+    return AuthSubmitExpecting();
+  }
+
+  Future<void> savePincode(String pincode) async {
+    await _secureStorage.write(key: 'pincode', value: pincode);
+  }
+
+  Future<String?> get pincode async {
+    return await _secureStorage.read(key: 'pincode');
   }
 }

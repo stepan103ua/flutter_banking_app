@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_banking/src/core/constants/endpoints_keys.dart';
-import 'package:flutter_banking/src/core/exceptions/auth_response_error_exception.dart';
-import 'package:flutter_banking/src/core/exceptions/no_internet_connection_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/auth_response_error_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/no_internet_connection_exception.dart';
 import 'package:flutter_banking/src/features/auth/models/register_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -71,7 +71,7 @@ class AuthApiProvider {
 
       final responseBody = json.decode(response.body);
       if (responseBody['error'] != null) {
-        throw AuthResponseErrorException(responseBody['error']);
+        throw AuthErrorException(responseBody['error']);
       }
 
       if (responseBody['refresh_token'] != null &&
@@ -81,7 +81,16 @@ class AuthApiProvider {
         return responseBody;
       }
 
-      throw AuthResponseErrorException('Failed to login. Try again');
+      throw AuthErrorException('Failed to login. Try again');
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
+    try {
+      return await _auth(
+          {'refreshToken': refreshToken}, EndpointsKeys.refreshTokenEndpoint);
     } catch (_) {
       rethrow;
     }

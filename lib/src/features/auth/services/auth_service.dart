@@ -1,5 +1,6 @@
 import 'package:flutter_banking/src/core/data/session_data_provider.dart';
-import 'package:flutter_banking/src/core/exceptions/auth_response_error_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/auth_response_error_exception.dart';
+import 'package:flutter_banking/src/core/errors/exceptions/no_internet_connection_exception.dart';
 import 'package:flutter_banking/src/features/auth/data/auth_api_provider.dart';
 import 'package:flutter_banking/src/features/auth/models/login_model.dart';
 import 'package:flutter_banking/src/features/auth/models/register_model.dart';
@@ -14,7 +15,7 @@ class AuthService {
           phoneNumber: loginModel.login, password: loginModel.password);
 
       await _saveToSession(responseData);
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     }
     return null;
@@ -28,7 +29,7 @@ class AuthService {
       await _saveToSession(responseData);
 
       return null;
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
       return error.message;
     }
   }
@@ -40,7 +41,25 @@ class AuthService {
       _saveToSession(responseData);
 
       return null;
-    } on AuthResponseErrorException catch (error) {
+    } on AuthErrorException catch (error) {
+      return error.message;
+    }
+  }
+
+  Future<String?> refreshToken() async {
+    try {
+      final refreshToken = await _sessionDataProvider.getRefreshToken;
+      if (refreshToken == null) {
+        return 'No refresh token';
+      }
+      final responseData = await _authApiProvider.refreshToken(refreshToken);
+
+      await _saveToSession(responseData);
+
+      return null;
+    } on AuthErrorException catch (error) {
+      return error.message;
+    } on NoInternetConnectionException catch (error) {
       return error.message;
     }
   }
@@ -53,4 +72,7 @@ class AuthService {
     await _sessionDataProvider
         .saveRefreshTokenExpireDate(data['refresh_expire_date']);
   }
+
+  Future<bool> checkPincode(String pincode) async =>
+      (await _sessionDataProvider.pincode) == pincode;
 }
